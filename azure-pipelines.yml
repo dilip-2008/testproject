@@ -8,11 +8,33 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
-
-
+variables:
+  var1: Chennai 
+  var2: hyderabad
+  var3: delhi
+parameters:
+  - name: env
+    type: string
+    default: Dev
+  
 stages:
-  - stage: Stage1
+  - stage: Build
     jobs:
-      - job: test
-        steps:
-          - bash: ls -lrt
+    - job: job1
+      steps: 
+      - script: echo "Build run on $(var1)"
+    - job: job2
+      steps: 
+      - script: echo "Build2 run on $(var2)"
+  - stage: Deploy
+    jobs:
+    - job: job3
+      steps:
+      - script: echo "Deployed on $(var3)"
+    - deployment: 
+      environment: TEST
+      strategy:
+       runOnce:
+          deploy:
+             steps:
+               - bash: echo "TEST environment"    
