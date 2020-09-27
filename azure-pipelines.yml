@@ -9,6 +9,10 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+
+stages:
+  - stage: Stage1
+    jobs:
+      - job: test
+        steps:
+          - bash: ls -lrt
